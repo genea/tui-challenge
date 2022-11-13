@@ -1,0 +1,75 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.5'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+//    id 'com.palantir.docker' version '0.33.0'
+//    id 'com.palantir.docker-run' version '0.33.0'
+    id 'org.jetbrains.kotlin.jvm' version '1.6.21'
+    id 'org.jetbrains.kotlin.plugin.spring' version '1.6.21'
+}
+
+
+group = 'com.bodean'
+version = '0.0.1-SNAPSHOT'
+java.sourceCompatibility = JavaVersion.VERSION_11
+def dockerOwner = 'eugen'
+
+//task prepareDockerfileTemplate(type: Copy) {
+//	from "src/main/resources/docker"
+//	include "Dockerfile"
+//	filter { it.replaceAll('<%=name%>', project.name) }
+//	filter { it.replaceAll('<%=version%>', project.version) }
+//	into "$buildDir"
+//}
+//// add explicit dependencies, otherwise we get warning at console
+//dockerPrepare.dependsOn bootJar
+//bootJar.dependsOn prepareDockerfileTemplate
+//bootJarMainClassName.dependsOn prepareDockerfileTemplate
+//bootRunMainClassName.dependsOn prepareDockerfileTemplate
+//
+//// https://plugins.gradle.org/plugin/com.palantir.docker
+//docker {
+//	name "${dockerOwner}/${project.name}:${project.version}"
+//	files "$buildDir/libs/${project.name}-${project.version}.jar"
+//	dockerfile file("$buildDir/Dockerfile")
+//}
+//
+//// https://plugins.gradle.org/plugin/com.palantir.docker-run
+//dockerRun {
+//	name "${project.name}"
+//	image "${dockerOwner}/${project.name}:${project.version}"
+//	ports '8080:8080','8081:8081'
+//	clean true
+//	daemonize false
+//}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation('org.springframework.boot:spring-boot-starter-webflux')
+    implementation('com.fasterxml.jackson.module:jackson-module-kotlin')
+    implementation('io.projectreactor.kotlin:reactor-kotlin-extensions')
+    implementation('org.jetbrains.kotlin:kotlin-reflect')
+    implementation('org.jetbrains.kotlin:kotlin-stdlib-jdk8')
+    implementation('org.jetbrains.kotlinx:kotlinx-coroutines-reactor')
+    implementation('com.fasterxml.jackson.module:jackson-module-kotlin')
+    implementation('org.springdoc:springdoc-openapi-webflux-core:1.6.12')
+    implementation('org.springdoc:springdoc-openapi-webflux-ui:1.6.12')
+    implementation('org.springdoc:springdoc-openapi-kotlin:1.6.12')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation('io.projectreactor:reactor-test')
+    testImplementation('com.ninja-squad:springmockk:3.1.0')
+    testImplementation('com.squareup.okhttp3:mockwebserver')
+    testImplementation('com.squareup.okhttp3:okhttp')
+}
+
+tasks {
+    test {
+        useJUnitPlatform()
+    }
+}
+
+
+
+
